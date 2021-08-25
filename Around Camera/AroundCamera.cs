@@ -94,6 +94,11 @@ namespace SmallSoulsLikeGame
                     return faceDirection;
                 }
 
+                /// <summary>
+                /// Tries to lock on a target according to the lock-on parameters.
+                /// </summary>
+                /// <param name="enable">True to try lock-on, false to set camera free.</param>
+                /// <returns></returns>
                 public bool ToggleLockOn(bool enable)
                 {
                     bool result = false;
