@@ -10,9 +10,10 @@ namespace MyGameNamespace
         {
             public class AroundCamera : MonoBehaviour
             {
-                #region Fields
+                #region Fields                
                 //General Data
                 [Header("General Data")]
+                public bool active = true;
                 [SerializeField] private float maxDistance = 5f;
                 [SerializeField] private float minDistance = 0f;        //Usually should be left on 0
                 [SerializeField] private float height = 0f;
@@ -23,10 +24,10 @@ namespace MyGameNamespace
                 [SerializeField] private float horizontalSpeed = 200f;
                 [SerializeField] private float verticalSpeed = 100f;
                 [SerializeField] private Vector3 startRotation;
-                private float speedX = 0f;
-                private float speedY = 0f;
                 private Quaternion rotation;
                 private Vector3 faceDirection;
+                private float speedX = 0f;
+                private float speedY = 0f;
 
                 //Lock-On Data
                 [Header("Lock-On Data")]
@@ -65,6 +66,9 @@ namespace MyGameNamespace
 
                 private void LateUpdate()
                 {
+                    if (!active)
+                        return;
+
                     SetRotation();
                     CalculateFinalPosition();
                     if (enableDebug) { DoDebug(); DrawLockOnField(); }
