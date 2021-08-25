@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SmallSoulsLikeGame
+namespace MyGameNamespace
 {
     namespace System
     {
@@ -10,7 +10,7 @@ namespace SmallSoulsLikeGame
         {
             public class AroundCamera : MonoBehaviour
             {
-                #region Fields                
+                #region Fields
                 //General Data
                 [Header("General Data")]
                 [SerializeField] private float maxDistance = 5f;
@@ -21,7 +21,7 @@ namespace SmallSoulsLikeGame
                 //Movement Data
                 [Header("Movement Data")]
                 [SerializeField] private float horizontalSpeed = 200f;
-                [SerializeField] private float verticalSpeed = 100f;                
+                [SerializeField] private float verticalSpeed = 100f;
                 [SerializeField] private Vector3 startRotation;
                 private float speedX = 0f;
                 private float speedY = 0f;
