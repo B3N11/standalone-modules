@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AroundCamera : MonoBehaviour
 {
-    #region Fields                
+    #region Fields
     //General Data
     [Header("General Data")]
     public bool active = true;
@@ -26,13 +26,12 @@ public class AroundCamera : MonoBehaviour
     //Lock-On Data
     [Header("Lock-On Data")]
     public bool lockedOn = false;
+    [SerializeField] private string lockOnTag = "Enemy";
     [SerializeField] private float lockOnRange = 30f;
-    [SerializeField] private float lockOnHeight = 0f;
     [SerializeField] private float lockOnAngleMin = -20f;
     [SerializeField] private float lockOnAngleMax = 20f;
     [SerializeField] private float lockOnSearchRayDensity = 1f;     //Defines the angle that is rotated before the next raycast. Example: If the lockOnAngle goes from -20 to 20 and the lockOnSearchRayDensity is 1, then there will be 41 rays cast. (From -20° to 0° to 20°)
     private List<Transform> lockOnTargets = new List<Transform>();
-    [SerializeField] private float lockOnPointHeight = 1f;
 
     //Input Data
     [Header("Input Data")]
@@ -46,9 +45,8 @@ public class AroundCamera : MonoBehaviour
 
     //References
     [Header("References")]
-    [SerializeField] private Transform target;
+    public Transform target;
     [SerializeField] private Transform lockOnRayStartPosition;
-    [SerializeField] private GameObject lockOnPoint;
     private Transform lockOnTarget;
     #endregion
 
@@ -91,12 +89,19 @@ public class AroundCamera : MonoBehaviour
         return faceDirection;
     }
 
+    ///<summary>
+    /// Tries to lock on to a target in front of the camera.
+    ///</summary>
+    ///<returns>Returns the result of the operation.</returns>
     public bool ToggleLockOn(bool enable)
     {
         bool result = false;
-        if (enable) { result = TryLockOn(); }
-        else { result = FreeCamera(); }
-        //lockOnPoint.SetActive(result);
+
+        if (enable)
+          result = TryLockOn();
+        else
+          result = FreeCamera();
+
         return result;
     }
     #endregion
@@ -126,7 +131,7 @@ public class AroundCamera : MonoBehaviour
             Vector3 direction = (Quaternion.Euler(0, angle, 0) * faceDirection).normalized;
             if (Physics.Raycast(lockOnRayStartPosition.position, direction, out hit, lockOnRange))
             {
-                if (hit.transform.root.gameObject.tag == "Enemy")
+                if (hit.transform.root.gameObject.tag == lockOnTag)
                 {
                     result = true;
                     lockOnTargets.Add(hit.transform.root);
@@ -152,12 +157,6 @@ public class AroundCamera : MonoBehaviour
         }
 
         lockOnTarget = currentTrans;
-    }
-
-    private void SetLockOnPoint()
-    {
-        lockOnPoint.transform.position = lockOnTarget.position + lockOnTarget.up * lockOnPointHeight;
-        lockOnPoint.transform.forward = lockOnPoint.transform.position - target.position;
     }
 
     private bool FreeCamera()
