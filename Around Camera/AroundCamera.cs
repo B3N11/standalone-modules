@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AroundCamera : MonoBehaviour
 {
-    #region Fields                
+    #region Fields
     //General Data
     [Header("General Data")]
     public bool active = true;
@@ -26,6 +26,7 @@ public class AroundCamera : MonoBehaviour
     //Lock-On Data
     [Header("Lock-On Data")]
     public bool lockedOn = false;
+    [SerializeField] private string lockOnTag = "Enemy";
     [SerializeField] private float lockOnRange = 30f;
     [SerializeField] private float lockOnHeight = 0f;
     [SerializeField] private float lockOnAngleMin = -20f;
@@ -91,6 +92,10 @@ public class AroundCamera : MonoBehaviour
         return faceDirection;
     }
 
+    ///<summary>
+    /// Tries to lock on to a target in front of the camera.
+    ///</summary>
+    ///<returns>Returns the result of the operation.</returns>
     public bool ToggleLockOn(bool enable)
     {
         bool result = false;
@@ -126,7 +131,7 @@ public class AroundCamera : MonoBehaviour
             Vector3 direction = (Quaternion.Euler(0, angle, 0) * faceDirection).normalized;
             if (Physics.Raycast(lockOnRayStartPosition.position, direction, out hit, lockOnRange))
             {
-                if (hit.transform.root.gameObject.tag == "Enemy")
+                if (hit.transform.root.gameObject.tag == lockOnTag)
                 {
                     result = true;
                     lockOnTargets.Add(hit.transform.root);
