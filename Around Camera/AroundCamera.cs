@@ -28,7 +28,6 @@ public class AroundCamera : MonoBehaviour
     public bool lockedOn = false;
     [SerializeField] private string lockOnTag = "Enemy";
     [SerializeField] private float lockOnRange = 30f;
-    [SerializeField] private float lockOnHeight = 0f;
     [SerializeField] private float lockOnAngleMin = -20f;
     [SerializeField] private float lockOnAngleMax = 20f;
     [SerializeField] private float lockOnSearchRayDensity = 1f;     //Defines the angle that is rotated before the next raycast. Example: If the lockOnAngle goes from -20 to 20 and the lockOnSearchRayDensity is 1, then there will be 41 rays cast. (From -20° to 0° to 20°)
