@@ -45,7 +45,7 @@ public class AroundCamera : MonoBehaviour
 
     //References
     [Header("References")]
-    [SerializeField] private Transform target;
+    public Transform target;
     [SerializeField] private Transform lockOnRayStartPosition;
     private Transform lockOnTarget;
     #endregion
