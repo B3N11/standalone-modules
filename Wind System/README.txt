@@ -1,4 +1,0 @@
-WIND SYSTEM INFORMATION
-***********************
-
-Description:
