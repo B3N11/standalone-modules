@@ -32,7 +32,6 @@ public class AroundCamera : MonoBehaviour
     [SerializeField] private float lockOnAngleMax = 20f;
     [SerializeField] private float lockOnSearchRayDensity = 1f;     //Defines the angle that is rotated before the next raycast. Example: If the lockOnAngle goes from -20 to 20 and the lockOnSearchRayDensity is 1, then there will be 41 rays cast. (From -20° to 0° to 20°)
     private List<Transform> lockOnTargets = new List<Transform>();
-    [SerializeField] private float lockOnPointHeight = 1f;
 
     //Input Data
     [Header("Input Data")]
@@ -98,9 +97,12 @@ public class AroundCamera : MonoBehaviour
     public bool ToggleLockOn(bool enable)
     {
         bool result = false;
-        if (enable) { result = TryLockOn(); }
-        else { result = FreeCamera(); }
-        //lockOnPoint.SetActive(result);
+
+        if (enable)
+          result = TryLockOn();
+        else
+          result = FreeCamera();
+
         return result;
     }
     #endregion
@@ -156,12 +158,6 @@ public class AroundCamera : MonoBehaviour
         }
 
         lockOnTarget = currentTrans;
-    }
-
-    private void SetLockOnPoint()
-    {
-        lockOnPoint.transform.position = lockOnTarget.position + lockOnTarget.up * lockOnPointHeight;
-        lockOnPoint.transform.forward = lockOnPoint.transform.position - target.position;
     }
 
     private bool FreeCamera()
